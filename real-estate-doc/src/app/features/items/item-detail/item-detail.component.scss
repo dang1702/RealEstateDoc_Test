@@ -1,9 +1,40 @@
 .item-detail {
+  padding: 2rem;
+  background-color: #f8f7fa;
+  min-height: calc(100vh - 64px);
+
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      button {
+        padding: 0.5rem;
+        
+        mat-icon {
+          margin-right: 0.25rem;
+        }
+      }
+
+      h1 {
+        color: #5f2fb4;
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        margin: 0;
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
   }
 
   .content {
