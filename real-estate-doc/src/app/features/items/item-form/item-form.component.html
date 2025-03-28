@@ -1,0 +1,158 @@
+<div class="container mx-auto p-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">{{ isEditMode ? 'Edit' : 'Create' }} Item</h1>
+    <button mat-button (click)="onCancel()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </div>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter item name">
+        <mat-error *ngIf="itemForm.get('name')?.hasError('required')">
+          Name is required
+        </mat-error>
+        <mat-error *ngIf="itemForm.get('name')?.hasError('minlength')">
+          Name must be at least 3 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="itemForm.get('type')?.hasError('required')">
+          Type is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{category}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="itemForm.get('category')?.hasError('required')">
+          Category is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" formControlName="price" placeholder="Enter price">
+        <mat-error *ngIf="itemForm.get('price')?.hasError('required')">
+          Price is required
+        </mat-error>
+        <mat-error *ngIf="itemForm.get('price')?.hasError('min')">
+          Price must be greater than 0
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3" placeholder="Enter item description"></textarea>
+      <mat-error *ngIf="itemForm.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+      <mat-error *ngIf="itemForm.get('description')?.hasError('minlength')">
+        Description must be at least 10 characters
+      </mat-error>
+    </mat-form-field>
+
+    <div formGroupName="location" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" placeholder="Enter address">
+        <mat-error *ngIf="itemForm.get('location.address')?.hasError('required')">
+          Address is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city" placeholder="Enter city">
+        <mat-error *ngIf="itemForm.get('location.city')?.hasError('required')">
+          City is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>State</mat-label>
+        <input matInput formControlName="state" placeholder="Enter state">
+        <mat-error *ngIf="itemForm.get('location.state')?.hasError('required')">
+          State is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country" placeholder="Enter country">
+        <mat-error *ngIf="itemForm.get('location.country')?.hasError('required')">
+          Country is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="active">Active</mat-option>
+        <mat-option value="inactive">Inactive</mat-option>
+        <mat-option value="maintenance">Maintenance</mat-option>
+      </mat-select>
+      <mat-error *ngIf="itemForm.get('status')?.hasError('required')">
+        Status is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700">Documents</label>
+        <input type="file" multiple (change)="onFileSelected($event, 'documents')" class="block w-full text-sm text-gray-500
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-full file:border-0
+          file:text-sm file:font-semibold
+          file:bg-blue-50 file:text-blue-700
+          hover:file:bg-blue-100">
+        <div *ngIf="selectedFiles.documents.length > 0" class="mt-2">
+          <p class="text-sm text-gray-500">Selected files:</p>
+          <ul class="list-disc list-inside">
+            <li *ngFor="let file of selectedFiles.documents">{{file.name}}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700">Images</label>
+        <input type="file" multiple accept="image/*" (change)="onFileSelected($event, 'images')" class="block w-full text-sm text-gray-500
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-full file:border-0
+          file:text-sm file:font-semibold
+          file:bg-blue-50 file:text-blue-700
+          hover:file:bg-blue-100">
+        <div *ngIf="selectedFiles.images.length > 0" class="mt-2">
+          <p class="text-sm text-gray-500">Selected files:</p>
+          <ul class="list-disc list-inside">
+            <li *ngFor="let file of selectedFiles.images">{{file.name}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-2">
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!itemForm.valid || isLoading">
+        <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Update' : 'Create' }}</span>
+      </button>
+    </div>
+  </form>
+</div> 

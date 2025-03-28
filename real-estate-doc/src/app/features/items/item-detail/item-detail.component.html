@@ -1,0 +1,91 @@
+<div class="item-detail" *ngIf="item">
+  <div class="header">
+    <h1>{{item.name}}</h1>
+    <div class="actions">
+      <button mat-button color="primary" (click)="onEdit()">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button mat-button color="warn" (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="main-info">
+      <div class="section">
+        <h3>Basic Information</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Type</span>
+            <span class="value">{{item.type}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Category</span>
+            <span class="value">{{item.category}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Price</span>
+            <span class="value">{{item.price | currency}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Status</span>
+            <span class="value">
+              <span class="status-badge" [ngClass]="item.status">{{item.status}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Description</h3>
+        <p class="text-lg">{{item.description}}</p>
+      </div>
+
+      <div class="section">
+        <h3>Location</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Address</span>
+            <span class="value">{{item.location.address}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">City</span>
+            <span class="value">{{item.location.city}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">State</span>
+            <span class="value">{{item.location.state}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Country</span>
+            <span class="value">{{item.location.country}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="section">
+        <h3>Maintenance Information</h3>
+        <div class="maintenance-info" *ngIf="item.maintenanceInfo">
+          <div class="info-item">
+            <span class="label">Last Maintenance</span>
+            <span class="value">{{item.maintenanceInfo.lastMaintenanceDate | date}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Next Maintenance</span>
+            <span class="value">{{item.maintenanceInfo.nextMaintenanceDate | date}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Notes</span>
+            <span class="value">{{item.maintenanceInfo.maintenanceNotes}}</span>
+          </div>
+        </div>
+        <p *ngIf="!item.maintenanceInfo">No maintenance information available.</p>
+      </div>
+    </div>
+  </div>
+</div> 

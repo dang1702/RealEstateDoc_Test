@@ -1,0 +1,109 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+
+// Include theme styles for core and each component used in your app.
+@include mat.core();
+
+// Define a custom theme
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+  )
+));
+
+// Apply the theme
+@include mat.all-component-themes($theme);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Global styles
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
+}
+
+// Custom styles
+.mat-mdc-table {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+  .mat-mdc-row {
+    &:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    &:hover {
+      background-color: #f0f2f5;
+    }
+  }
+}
+
+.mat-mdc-header-row {
+  background-color: #fff;
+}
+
+.price-cell {
+  text-align: right !important;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  
+  &.active {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  &.maintenance {
+    background-color: #fff3e0;
+    color: #f57c00;
+  }
+}
+
+.search-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  
+  .mat-mdc-form-field {
+    flex: 1;
+  }
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  
+  h2 {
+    margin: 0;
+  }
+}
+
+.mat-mdc-mini-fab {
+  margin-left: 8px;
+}
+
+// Snackbar styles
+.success-snackbar {
+  background: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background: #f44336;
+  color: white;
+}
